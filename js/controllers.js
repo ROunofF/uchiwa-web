@@ -268,8 +268,8 @@ controllerModule.controller('datacenters', ['$scope', 'titleFactory',
 /**
 * Events
 */
-controllerModule.controller('events', ['clientsService', 'conf', '$cookieStore', '$filter', 'filterService', 'helperService', '$rootScope', '$routeParams','routingService', '$scope', 'stashesService', 'titleFactory', 'userService',
-  function (clientsService, conf, $cookieStore, $filter, filterService, helperService, $rootScope, $routeParams, routingService, $scope, stashesService, titleFactory, userService) {
+controllerModule.controller('events', ['clientsService', 'conf', '$cookies', '$filter', 'filterService', 'helperService', '$rootScope', '$routeParams','routingService', '$scope', 'stashesService', 'titleFactory', 'userService',
+  function (clientsService, conf, $cookies, $filter, filterService, helperService, $rootScope, $routeParams, routingService, $scope, stashesService, titleFactory, userService) {
     $scope.pageHeaderText = 'Events';
     titleFactory.set($scope.pageHeaderText);
 
@@ -291,21 +291,21 @@ controllerModule.controller('events', ['clientsService', 'conf', '$cookieStore',
     $scope.user = userService;
 
     // Hide silenced
-    $scope.filters.silenced = $cookieStore.get('hideSilenced') || conf.hideSilenced;
+    $scope.filters.silenced = $cookies.get('hideSilenced') || conf.hideSilenced;
     $scope.$watch('filters.silenced', function () {
-      $cookieStore.put('hideSilenced', $scope.filters.silenced);
+      $cookies.put('hideSilenced', $scope.filters.silenced);
     });
 
     // Hide events from silenced clients
-    $scope.filters.clientSilenced = $cookieStore.get('hideClientSilenced') || conf.hideClientSilenced;
+    $scope.filters.clientSilenced = $cookies.get('hideClientSilenced') || conf.hideClientSilenced;
     $scope.$watch('filters.clientSilenced', function () {
-      $cookieStore.put('hideClientSilenced', $scope.filters.clientSilenced);
+      $cookies.put('hideClientSilenced', $scope.filters.clientSilenced);
     });
 
     // Hide occurrences
-    $scope.filters.occurrences = $cookieStore.get('hideOccurrences') || conf.hideOccurrences;
+    $scope.filters.occurrences = $cookies.get('hideOccurrences') || conf.hideOccurrences;
     $scope.$watch('filters.occurrences', function () {
-      $cookieStore.put('hideOccurrences', $scope.filters.occurrences);
+      $cookies.put('hideOccurrences', $scope.filters.occurrences);
     });
 
     $scope.selectEvents = function(selectModel) {
@@ -399,8 +399,8 @@ controllerModule.controller('info', ['backendService', '$scope', 'titleFactory',
 /**
 * Login
 */
-controllerModule.controller('login', [ 'backendService', '$cookieStore', '$location', 'notification', '$rootScope', '$scope',
-function (backendService, $cookieStore, $location, notification, $rootScope, $scope) {
+controllerModule.controller('login', [ 'backendService', '$cookies', '$location', 'notification', '$rootScope', '$scope',
+function (backendService, $cookies, $location, notification, $rootScope, $scope) {
 
   $scope.login = {user: '', pass: ''};
 
@@ -416,7 +416,7 @@ function (backendService, $cookieStore, $location, notification, $rootScope, $sc
   $scope.submit = function () {
     backendService.login($scope.login)
     .success(function (data) {
-      $cookieStore.put('uchiwa_auth', data);
+      $cookies.put('uchiwa_auth', data);
       backendService.getConfig();
       $location.path('/');
     })

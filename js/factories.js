@@ -2,11 +2,11 @@
 
 var factoryModule = angular.module('uchiwa.factories', []);
 
-factoryModule.factory('authInterceptor', function ($cookieStore, $q, $location, userService) {
+factoryModule.factory('authInterceptor', function ($cookies, $q, $location, userService) {
   return {
     request: function (config) {
       config.headers = config.headers || {};
-      var user = $cookieStore.get('uchiwa_auth');
+      var user = $cookies.get('uchiwa_auth');
       var token = null;
       if (angular.isDefined(user)) {
         token = user.Token || null;

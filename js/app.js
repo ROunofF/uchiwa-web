@@ -46,7 +46,7 @@ angular.module('uchiwa')
     $tooltipProvider.options({animation: false, 'placement': 'bottom'});
   }
 ])
-.run(function (backendService, conf, themes, $cookieStore, $location, notification, $rootScope, titleFactory) {
+.run(function (backendService, conf, themes, $cookies, $location, notification, $rootScope, titleFactory) {
   $rootScope.alerts = [];
   $rootScope.events = [];
   $rootScope.partialsPath = 'bower_components/uchiwa-web/partials';
@@ -61,7 +61,7 @@ angular.module('uchiwa')
   // fetch the sensu data on every page change
   $rootScope.$on('$routeChangeSuccess', function () {
     backendService.update();
-    $rootScope.auth = $cookieStore.get('uchiwa_auth') || false;
+    $rootScope.auth = $cookies.get('uchiwa_auth') || false;
   });
 
   $rootScope.$on('notification', function (event, type, message) {

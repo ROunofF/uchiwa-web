@@ -446,8 +446,8 @@ serviceModule.service('helperService', function() {
 /**
 * User service
 */
-serviceModule.service('userService', ['$cookieStore', '$location', '$rootScope',
-function ($cookieStore, $location, $rootScope) {
+serviceModule.service('userService', ['$cookies', '$location', '$rootScope',
+function ($cookies, $location, $rootScope) {
   this.isReadOnly = function () {
     if ($rootScope.auth && $rootScope.auth.Role && angular.isDefined($rootScope.auth.Role.Readonly)) {
       return $rootScope.auth.Role.Readonly;
@@ -458,7 +458,7 @@ function ($cookieStore, $location, $rootScope) {
     return false;
   };
   this.logout = function () {
-    $cookieStore.remove('uchiwa_auth');
+    $cookies.remove('uchiwa_auth');
     $rootScope.auth = false;
     $rootScope.config = false;
     $location.path('login');
